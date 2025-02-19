@@ -1,7 +1,10 @@
 {
   "name": "overmatch",
   "private": true,
-  "workspaces": ["client", "server"],
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "version": "1.0.0",
   "description": "",
   "scripts": {
@@ -11,7 +14,7 @@
     "type": "git",
     "url": "git+https://github.com/melissa-perez/overmatch.git"
   },
-  "keywords": [  
+  "keywords": [
     "overwatch",
     "game-stats",
     "match-tracker",
@@ -29,5 +32,9 @@
   "bugs": {
     "url": "https://github.com/melissa-perez/overmatch/issues"
   },
-  "homepage": "https://github.com/melissa-perez/overmatch#readme"
+  "homepage": "https://github.com/melissa-perez/overmatch#readme",
+  "dependencies": {
+    "concurrently": "^9.1.2",
+    "dotenv": "^16.4.7"
+  }
 }
