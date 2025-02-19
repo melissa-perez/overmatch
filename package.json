@@ -1,0 +1,33 @@
+{
+  "name": "overmatch",
+  "private": true,
+  "workspaces": ["client", "server"],
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/melissa-perez/overmatch.git"
+  },
+  "keywords": [  
+    "overwatch",
+    "game-stats",
+    "match-tracker",
+    "mern",
+    "typescript",
+    "react",
+    "express",
+    "mongodb",
+    "chartjs",
+    "data-visualization"
+  ],
+  "author": "Melissa Perez",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/melissa-perez/overmatch/issues"
+  },
+  "homepage": "https://github.com/melissa-perez/overmatch#readme"
+}
