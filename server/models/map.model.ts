@@ -12,4 +12,4 @@ const MapSchema = new Schema<IMap>({
 
 const MapModel = model<IMap>('Map', MapSchema);
 
-module.exports = MapModel;
+export default MapModel;

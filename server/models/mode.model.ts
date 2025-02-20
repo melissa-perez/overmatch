@@ -10,4 +10,4 @@ const ModeSchema = new Schema<IMode>({
 
 const ModeModel = model<IMode>('Mode', ModeSchema);
 
-module.exports = ModeModel;
+export default ModeModel;

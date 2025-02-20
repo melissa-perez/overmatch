@@ -10,4 +10,4 @@ const HeroSchema = new Schema<IHero>({
 
 const HeroModel = model<IHero>('Hero', HeroSchema);
 
-module.exports = HeroModel;
+export default HeroModel;
