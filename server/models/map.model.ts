@@ -1,6 +1,7 @@
 import { Schema, model, Document, Types } from 'mongoose';
 
 interface IMap extends Document {
+  _id: Types.ObjectId;
   name: string;
   mode: Types.ObjectId;
 }

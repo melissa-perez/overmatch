@@ -8,6 +8,7 @@ enum Outcome {
 }
 
 interface IMatch extends Document {
+  _id: Types.ObjectId;
   map: Types.ObjectId;
   outcome: string;
   finalScore: number;
