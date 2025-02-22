@@ -17,31 +17,31 @@ const auth = async (
   next: NextFunction,
 ) => {
   try {
-    const authHeader = request.headers.authorization;
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    const AUTH_HEADER = request.headers.authorization;
+    if (!AUTH_HEADER || !AUTH_HEADER.startsWith('Bearer ')) {
       //throw new UnauthenticatedError("Authentication invalid");
       return response
         .status(401)
         .json({ message: 'Missing token, authorization failed.' });
     }
 
-    const token = authHeader.split(' ')[1];
-    const jwtSecret = process.env.JWT_SECRET;
+    const TOKEN = AUTH_HEADER.split(' ')[1];
+    const JWT_SECRET = process.env.JWT_SECRET;
 
-    if (!jwtSecret) {
+    if (!JWT_SECRET) {
       return response
         .status(500)
         .json({ message: 'Server error: Missing JWT secret' });
     }
 
-    const payload = jwt.verify(
-      token,
+    const PAYLOAD = jwt.verify(
+      TOKEN,
       process.env.JWT_SECRET as string,
     ) as IAuthUser;
 
     request.user = {
-      _id: new Types.ObjectId(payload._id),
-      username: payload.username,
+      _id: new Types.ObjectId(PAYLOAD._id),
+      username: PAYLOAD.username,
     };
     next();
   } catch (error) {
