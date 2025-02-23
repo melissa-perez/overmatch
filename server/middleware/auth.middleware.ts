@@ -15,23 +15,25 @@ const auth = async (
   request: IAuthRequest,
   response: Response,
   next: NextFunction,
-) => {
+): Promise<void> => {
   try {
     const AUTH_HEADER = request.headers.authorization;
     if (!AUTH_HEADER || !AUTH_HEADER.startsWith('Bearer ')) {
       //throw new UnauthenticatedError("Authentication invalid");
-      return response
+      response
         .status(401)
         .json({ message: 'Missing token, authorization failed.' });
+      return;
     }
 
     const TOKEN = AUTH_HEADER.split(' ')[1];
     const JWT_SECRET = process.env.JWT_SECRET;
 
     if (!JWT_SECRET) {
-      return response
+      response
         .status(500)
         .json({ message: 'Server error: Missing JWT secret' });
+      return;
     }
 
     const PAYLOAD = jwt.verify(
@@ -46,9 +48,10 @@ const auth = async (
     next();
   } catch (error) {
     // throw new UnauthenticatedError("Authentication invalid");
-    return response
+    response
       .status(401)
       .json({ message: 'Missing token, authorization failed.' });
+    return;
   }
 };
 

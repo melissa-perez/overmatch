@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 import authRouter from '../routes/auth.routes';
+import matchRouter from '../routes/match.routes';
 import auth from '../middleware/auth.middleware';
 import connectDB from '../config/connect.config';
 
@@ -31,6 +32,8 @@ app.use(helmet());
 app.use(xss());
 
 app.use('/api/v1/auth', authRouter);
+app.use('/api/v1/match', auth, matchRouter);
+
 app.get('/', (req, res) => {
   res.send('Server is running!');
 });

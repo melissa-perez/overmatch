@@ -8,6 +8,7 @@ interface IUser extends Document {
   email: string;
   password: string;
   createJWT(): string;
+  comparePassword(candidatePassword: string): Promise<boolean>;
 }
 
 const UserSchema = new Schema<IUser>({
@@ -35,8 +36,9 @@ const UserSchema = new Schema<IUser>({
 });
 
 UserSchema.pre('save', async function () {
-  const SALT = await bcrypt.genSalt(10);
-  this.password = await bcrypt.hash(this.password, SALT);
+  const ROUNDS = 10;
+  const salt = await bcrypt.genSalt(ROUNDS);
+  this.password = await bcrypt.hash(this.password, salt);
 });
 
 UserSchema.methods.createJWT = function () {
@@ -65,6 +67,7 @@ UserSchema.methods.comparePassword = async function (
   candidatePassword: string,
 ) {
   const isMatch = await bcrypt.compare(candidatePassword, this.password);
+  console.log(isMatch);
   return isMatch;
 };
 
