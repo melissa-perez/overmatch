@@ -40,8 +40,6 @@ UserSchema.pre('save', async function () {
 });
 
 UserSchema.methods.createJWT = function () {
-  console.log('JWT_SECRET:', process.env.JWT_SECRET);
-  console.log('JWT_LIFETIME:', process.env.JWT_LIFETIME);
   const JWT_SECRET = process.env.JWT_SECRET as string;
   const JWT_LIFETIME = process.env.JWT_LIFETIME as string | number;
 
@@ -50,11 +48,12 @@ UserSchema.methods.createJWT = function () {
   }
 
   if (!JWT_LIFETIME) {
-    throw new Error('Server error: Missing JWT secret');
+    throw new Error('Server error: Missing JWT lifetime');
   }
   const signOptions: SignOptions = {
-    expiresIn: JWT_LIFETIME as jwt.SignOptions['expiresIn'], // This can be a string or number (e.g., "1h" or 3600)
+    expiresIn: JWT_LIFETIME as jwt.SignOptions['expiresIn'],
   };
+
   return jwt.sign(
     { _id: this._id, username: this.username },
     JWT_SECRET,
