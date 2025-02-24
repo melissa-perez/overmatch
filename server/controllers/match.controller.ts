@@ -1,10 +1,7 @@
 import MatchModel from '../models/match.model';
 import { Request, Response, NextFunction } from 'express';
-import { IUser } from '../models/user.model';
-
-interface IAuthRequest extends Request {
-  user?: IUser;
-}
+import { Types } from 'mongoose';
+import { IAuthUser, IAuthRequest } from '../types/auth.types';
 
 const getAllMatches = async (
   request: IAuthRequest,
@@ -14,11 +11,14 @@ const getAllMatches = async (
     response.status(401).json({ error: 'Unauthorized' });
     return;
   }
-  const matches = await MatchModel.find({ createdBy: request.user._id }).sort(
+  const { _id: userId } = request.user;
+
+  const matches = await MatchModel.find({ createdBy: userId }).sort(
     'createdAt',
   );
 
   response.status(200).json({ matches });
+  return;
 };
 
 const getMatch = async (
@@ -47,10 +47,87 @@ const getMatch = async (
   return;
 };
 
-const createMatch = () => {};
+const createMatch = async (
+  request: IAuthRequest,
+  response: Response,
+): Promise<void> => {
+  if (!request.user) {
+    response.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+  const { _id: userId } = request.user;
 
-const deleteMatch = () => {};
+  request.body.createdBy = userId;
+  const match = await MatchModel.create(request.body);
+  response.status(201).json(match);
+  return;
+};
 
-const updateMatch = () => {};
+const deleteMatch = async (
+  request: IAuthRequest,
+  response: Response,
+): Promise<void> => {
+  if (!request.user) {
+    response.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+  const { _id: userId } = request.user;
+  const { id: matchId } = request.params;
+
+  const match = await MatchModel.findByIdAndDelete({
+    _id: matchId,
+    createdBy: userId,
+  });
+
+  if (!match) {
+    throw new Error(`No match with id ${matchId}`);
+  }
+
+  response.status(200).json({ msg: 'The entry was deleted.', match });
+  return;
+};
+
+const updateMatch = async (
+  request: IAuthRequest,
+  response: Response,
+): Promise<void> => {
+  if (!request.user) {
+    response.status(401).json({ error: 'Unauthorized' });
+    return;
+  }
+  const { _id: userId } = request.user;
+  const { id: matchId } = request.params;
+  const {
+    map,
+    outcome,
+    finalScore,
+    gameLength,
+    date,
+    replayCode,
+    heroesPlayed,
+  } = request.body;
+
+  console.log(request.body);
+  if (outcome === '') {
+    throw new Error('Outcome cannot be empty.');
+  }
+  if (!map) {
+    throw new Error('Map cannot be empty.');
+  }
+  if (!finalScore) {
+    throw new Error('Final score cannot be empty.');
+  }
+
+  const match = await MatchModel.findByIdAndUpdate(
+    { _id: matchId, createdBy: userId },
+    request.body,
+    { new: true, runValidators: true },
+  );
+  if (!match) {
+    throw new Error(`No match with id: ${matchId}`);
+  }
+  response.status(200).json({ match });
+  return;
+};
 
 export { getAllMatches, getMatch, createMatch, deleteMatch, updateMatch };

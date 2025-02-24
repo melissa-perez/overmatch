@@ -1,15 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { Types } from 'mongoose';
-
-interface IAuthUser {
-  _id: Types.ObjectId;
-  username: string;
-}
-
-interface IAuthRequest extends Request {
-  user?: IAuthUser;
-}
+import { IAuthUser, IAuthRequest } from '../types/auth.types';
 
 const auth = async (
   request: IAuthRequest,

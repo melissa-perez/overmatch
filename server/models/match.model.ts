@@ -32,8 +32,8 @@ const MatchSchema = new Schema<IMatch>(
     map: { type: Schema.Types.ObjectId, ref: 'Map', required: true },
     outcome: { type: String, enum: Object.values(Outcome), required: true },
     finalScore: { type: Number, required: true },
-    gameLength: { type: String, required: true },
-    date: { type: Date, required: true },
+    gameLength: { type: String, required: false },
+    date: { type: Date, required: false },
     replayCode: {
       type: String,
       required: false,
@@ -42,7 +42,7 @@ const MatchSchema = new Schema<IMatch>(
       match: /^[A-Z0-9]{6}$/,
     },
     heroesPlayed: [
-      { type: Schema.Types.ObjectId, ref: 'Hero', required: true },
+      { type: Schema.Types.ObjectId, ref: 'Hero', required: false },
     ],
   },
   { timestamps: true },
