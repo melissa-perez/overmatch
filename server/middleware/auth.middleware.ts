@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { Types } from 'mongoose';
 import { IAuthUser, IAuthRequest } from '../types/auth.types';
@@ -9,16 +9,15 @@ const auth = async (
   next: NextFunction,
 ): Promise<void> => {
   try {
-    const AUTH_HEADER = request.headers.authorization;
-    if (!AUTH_HEADER || !AUTH_HEADER.startsWith('Bearer ')) {
-      //throw new UnauthenticatedError("Authentication invalid");
+    const authHeader = request.headers.authorization;
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
       response
         .status(401)
         .json({ message: 'Missing token, authorization failed.' });
       return;
     }
 
-    const TOKEN = AUTH_HEADER.split(' ')[1];
+    const token = authHeader.split(' ')[1];
     const JWT_SECRET = process.env.JWT_SECRET;
 
     if (!JWT_SECRET) {
@@ -28,18 +27,14 @@ const auth = async (
       return;
     }
 
-    const PAYLOAD = jwt.verify(
-      TOKEN,
-      process.env.JWT_SECRET as string,
-    ) as IAuthUser;
+    const payload = jwt.verify(token, JWT_SECRET) as IAuthUser;
 
     request.user = {
-      _id: new Types.ObjectId(PAYLOAD._id),
-      username: PAYLOAD.username,
+      _id: new Types.ObjectId(payload._id),
+      username: payload.username,
     };
     next();
   } catch (error) {
-    // throw new UnauthenticatedError("Authentication invalid");
     response
       .status(401)
       .json({ message: 'Missing token, authorization failed.' });

@@ -7,17 +7,16 @@ enum Outcome {
   ABANDONED = 'abandoned',
 }
 
-enum Mode {
+/*enum Mode {
   CONTROL = "control",
   ESCORT = "escort",
   FLASHPOINT = "flashpoint",
   HYBRID = "hybrid",
   PUSH = "push",
   CLASH = "clash"
-}
+}*/
 
 interface IMatch extends Document {
-  _id: Types.ObjectId;
   map: Types.ObjectId;
   outcome: string;
   finalScore: number;
@@ -31,9 +30,9 @@ const MatchSchema = new Schema<IMatch>(
   {
     map: { type: Schema.Types.ObjectId, ref: 'Map', required: true },
     outcome: { type: String, enum: Object.values(Outcome), required: true },
-    finalScore: { type: Number, required: true },
+    finalScore: { type: Number, required: false },
     gameLength: { type: String, required: false },
-    date: { type: Date, required: false },
+    date: { type: Date, required: false, default: Date.now },
     replayCode: {
       type: String,
       required: false,

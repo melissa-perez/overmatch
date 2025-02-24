@@ -12,6 +12,7 @@ const getAllMatches = async (
     return;
   }
   const { _id: userId } = request.user;
+  console.log(request.user);
 
   const matches = await MatchModel.find({ createdBy: userId }).sort(
     'createdAt',
