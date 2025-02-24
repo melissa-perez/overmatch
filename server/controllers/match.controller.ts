@@ -109,15 +109,15 @@ const updateMatch = async (
   } = request.body;
 
   console.log(request.body);
-  if (outcome === '') {
+  /*if (outcome === '') {
     throw new Error('Outcome cannot be empty.');
-  }
-  if (!map) {
+  }*/
+  /*if (!map) {
     throw new Error('Map cannot be empty.');
-  }
-  if (!finalScore) {
+  }*/
+  /*if (!finalScore) {
     throw new Error('Final score cannot be empty.');
-  }
+  }*/
 
   const match = await MatchModel.findByIdAndUpdate(
     { _id: matchId, createdBy: userId },

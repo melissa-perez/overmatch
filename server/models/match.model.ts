@@ -1,10 +1,10 @@
 import { Schema, model, Document, Types } from 'mongoose';
 
 enum Outcome {
-  VICTORY = 'victory',
-  LOSS = 'loss',
-  DRAW = 'draw',
-  ABANDONED = 'abandoned',
+  VICTORY = 'Victory',
+  LOSS = 'Loss',
+  DRAW = 'Draw',
+  ABANDONED = 'Abandoned',
 }
 
 /*enum Mode {
@@ -24,6 +24,7 @@ interface IMatch extends Document {
   date: Date;
   replayCode: string;
   heroesPlayed: Array<Types.ObjectId>;
+  createdBy: Types.ObjectId;
 }
 
 const MatchSchema = new Schema<IMatch>(
@@ -43,6 +44,11 @@ const MatchSchema = new Schema<IMatch>(
     heroesPlayed: [
       { type: Schema.Types.ObjectId, ref: 'Hero', required: false },
     ],
+    createdBy: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: [true, 'Please provide user'],
+    },
   },
   { timestamps: true },
 );

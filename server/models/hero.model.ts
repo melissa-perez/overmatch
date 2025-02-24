@@ -1,9 +1,9 @@
 import { Schema, model, Document, Types } from 'mongoose';
 
 enum Role {
-  TANK = 'tank',
-  DAMAGE = 'damage',
-  SUPPORT = 'support',
+  TANK = 'Tank',
+  DAMAGE = 'Damage',
+  SUPPORT = 'Support',
 }
 
 interface IHero extends Document {
