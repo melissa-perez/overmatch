@@ -1,5 +1,11 @@
 import express, { Router } from 'express';
-import { getAllMatches, getMatch, createMatch, deleteMatch, updateMatch } from '../controllers/match.controller';
+import {
+  getAllMatches,
+  getMatch,
+  createMatch,
+  deleteMatch,
+  updateMatch,
+} from '../controllers/match.controller';
 
 const matchRouter: Router = express.Router();
 
