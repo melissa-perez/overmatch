@@ -5,6 +5,8 @@ import MatchesPage from './views/MatchesPage';
 import RegisterPage from './views/RegisterPage';
 import './App.css';
 import Footer from './components/Footer';
+import PrivateRoute from './routes/PrivateRoute';
+
 function App() {
   return (
     <>
@@ -13,7 +15,9 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/matches" element={<MatchesPage />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/matches" element={<MatchesPage />} />
+          </Route>
         </Routes>
       </Router>
       <Footer />

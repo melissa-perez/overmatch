@@ -1,15 +1,16 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/auth.context';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      console.log('hello');
       const response = await fetch('http://localhost:5000/api/v1/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -18,8 +19,8 @@ const LoginPage = () => {
 
       const data = await response.json();
       if (response.ok) {
-        localStorage.setItem('token', data.token);
-        navigate('/matches'); // Redirect to matches after login
+        login(data.token);
+        navigate('/matches');
       } else {
         alert(data.message || 'Login failed');
       }

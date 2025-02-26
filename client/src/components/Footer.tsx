@@ -1,12 +1,4 @@
-const Footer = () => {
-  return (
-    <footer style={styles.footer}>
-      <p>© {new Date().getFullYear()} Overmatch. All rights reserved.</p>
-    </footer>
-  );
-};
-
-const styles = {
+const styles: any = {
   footer: {
     width: '100vw',
     textAlign: 'center',
@@ -16,6 +8,14 @@ const styles = {
     bottom: 0,
     left: 0,
   },
+};
+
+const Footer = () => {
+  return (
+    <footer style={styles.footer}>
+      <p>© {new Date().getFullYear()} Overmatch. All rights reserved.</p>
+    </footer>
+  );
 };
 
 export default Footer;
