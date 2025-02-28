@@ -7,6 +7,7 @@ import './App.css';
 import Footer from './components/Footer';
 import PrivateRoute from './routes/PrivateRoute';
 import Navbar from './components/Navbar';
+import UpdateMatchPage from './views/UpdateMatchPage';
 function App() {
   return (
     <>
@@ -18,6 +19,9 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route element={<PrivateRoute />}>
             <Route path="/matches" element={<MatchesPage />} />
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/update/:matchId" element={<UpdateMatchPage />} />{' '}
           </Route>
         </Routes>
       </Router>

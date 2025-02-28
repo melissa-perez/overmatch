@@ -98,15 +98,7 @@ const updateMatch = async (
   }
   const { _id: userId } = request.user;
   const { id: matchId } = request.params;
-  const {
-    map,
-    outcome,
-    finalScore,
-    gameLength,
-    date,
-    replayCode,
-    heroesPlayed,
-  } = request.body;
+  const { mode, outcome, finalScore, gameLength, date } = request.body;
 
   console.log(request.body);
   /*if (outcome === '') {

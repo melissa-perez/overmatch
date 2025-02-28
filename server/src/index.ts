@@ -39,11 +39,7 @@ app.use(helmet());
 app.use(xss());
 
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/match', auth, matchRouter);
-
-app.get('/', (req, res) => {
-  res.send('Server is running!');
-});
+app.use('/api/v1/matches', auth, matchRouter);
 
 const start = async () => {
   try {
