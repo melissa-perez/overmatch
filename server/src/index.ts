@@ -16,10 +16,17 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 const ISPRODUCTIONENV = app.get('env') === 'production';
+app.set('trust proxy', 1);
+
 if (ISPRODUCTIONENV) {
-  app.set('trust proxy', 1);
-  app.use(cors());
+  app.use(
+    cors({ origin: 'your-production-frontend-url.com', credentials: true }),
+  );
+} else {
+  app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
 }
+
+app.use(express.static('public'));
 
 app.use(
   rateLimit({
@@ -32,11 +39,7 @@ app.use(helmet());
 app.use(xss());
 
 app.use('/api/v1/auth', authRouter);
-app.use('/api/v1/match', auth, matchRouter);
-
-app.get('/', (req, res) => {
-  res.send('Server is running!');
-});
+app.use('/api/v1/matches', auth, matchRouter);
 
 const start = async () => {
   try {

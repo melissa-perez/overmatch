@@ -1,15 +1,32 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './views/HomePage';
+import LoginPage from './views/LoginPage';
 import MatchesPage from './views/MatchesPage';
-
+import RegisterPage from './views/RegisterPage';
+import './App.css';
+import Footer from './components/Footer';
+import PrivateRoute from './routes/PrivateRoute';
+import Navbar from './components/Navbar';
+import UpdateMatchPage from './views/UpdateMatchPage';
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/matches" element={<MatchesPage />} />
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route element={<PrivateRoute />}>
+            <Route path="/matches" element={<MatchesPage />} />
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/update/:matchId" element={<UpdateMatchPage />} />{' '}
+          </Route>
+        </Routes>
+      </Router>
+      <Footer />
+    </>
   );
 }
 
