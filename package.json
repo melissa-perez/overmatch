@@ -9,9 +9,7 @@
   "description": "",
   "scripts": {
     "dev": "concurrently \"npm run dev --prefix server\" \"npm run dev --prefix client\"",
-    "format": "npm run format --workspace=server && npm run format --workspace=client",
-    "build": "tsc",
-    "start": "node dist/index.js"
+    "format": "npm run format --workspace=server && npm run format --workspace=client"
   },
   "repository": {
     "type": "git",
