@@ -109,7 +109,7 @@
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "src/server/**/*.ts" // Include all TypeScript files in the server directory
+    "src/**/*.ts" // Include all TypeScript files in the server directory
   ],
   "exclude": [
     "node_modules", // Exclude node_modules
